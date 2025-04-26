@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>موقع تطهير الأسهم</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('https://source.unsplash.com/1600x900/?city,sky') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+      overflow-x: hidden;
+    }
+    header {
+      background-color: rgba(0, 77, 64, 0.8);
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      border-bottom: 3px solid #004d40;
+      font-size: 1.8rem;
+      animation: fadeInHeader 1s ease-out;
+    }
+    @keyframes fadeInHeader {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 3rem;
+      text-align: center;
+      animation: fadeInContainer 1s ease-in-out;
+    }
+    @keyframes fadeInContainer {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .grid {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      animation: fadeInGrid 1s ease-out;
+    }
+    @keyframes fadeInGrid {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .box {
+      background-color: rgba(0, 105, 92, 0.9);
+      color: white;
+      width: 220px;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 25px;
+      font-size: 1.4rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+      animation: boxAnimation 0.8s ease-in-out;
+    }
+    @keyframes boxAnimation {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .box:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+    }
+
+    .hidden {
+      display: none;
+    }
+    .fadeIn {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    .slideUp {
+      animation: slideUp 0.5s ease-in-out;
+    }
+    @keyframes slideUp {
+      from {transform: translateY(20px); opacity: 0;}
+      to {transform: translateY(0); opacity: 1;}
+    }
+    .slideDown {
+      animation: slideDown 0.5s ease-in-out;
+    }
+    @keyframes slideDown {
+      from {transform: translateY(-20px); opacity: 0;}
+      to {transform: translateY(0); opacity: 1;}
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: bold;
+    }
+    input {
+      width: 75%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    input:focus {
+      border-color: #00796b;
+      box-shadow: 0 0 5px rgba(0, 123, 123, 0.5);
+    }
+
+    button {
+      background-color: #00796b;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background-color 0.3s;
+      margin: 0.5rem;
+    }
+    button:hover {
+      background-color: #004d40;
+    }
+
+    .result, .notice {
+      background-color: rgba(224, 242, 241, 0.9);
+      padding: 1.5rem;
+      margin-top: 2rem;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    #suggestions {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      position: absolute;
+      width: 75%;
+      max-height: 150px;
+      overflow-y: auto;
+      z-index: 1000;
+      margin-top: 0.3rem;
+    }
+    #suggestions li {
+      padding: 8px;
+      cursor: pointer;
+    }
+    #suggestions li:hover {
+      background-color: #f1f1f1;
+    }
+
+    .purification-rates {
+      background-color: #f8f9fa;
+      padding: 1rem;
+      border-radius: 15px;
+      margin-top: 2rem;
+      border: 1px solid #ddd;
+    }
+    .purification-rates h3 {
+      color: #00796b;
+    }
+    .purification-rates ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    .purification-rates li {
+      padding: 0.8rem;
+      border-bottom: 1px solid #ddd;
+      font-size: 1.1rem;
+      color: #333;
+    }
+    .purification-rates li:last-child {
+      border-bottom: none;
+    }
+    .purification-rates li span {
+      font-weight: bold;
+    }
+
+    .purification-rate-box {
+      background-color: #00796b;
+      color: white;
+      padding: 1rem;
+      border-radius: 15px;
+      margin-bottom: 2rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-box {
+      margin-bottom: 1rem;
+    }
+    .search-box input {
+      width: 80%;
+      padding: 0.6rem;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      border: 1px solid #ddd;
+    }
+
+    .no-results {
+      color: red;
+      font-weight: bold;
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>موقع تطهير الأسهم السعودية</h1>
+  </header>
+
+  <div id="homePage" class="container fadeIn">
+    <div class="grid">
+      <div class="box" onclick="goToCalculator()">حاسبة التطهير</div>
+      <div class="box" onclick="goToPurificationRates()">نسب تطهير الشركات</div>
+    </div>
+  </div>
+
+  <div id="calculatorPage" class="container hidden slideUp">
+    <h2>حاسبة تطهير الأسهم</h2>
+    <div class="form-group">
+      <label for="stockName">اسم السهم</label>
+      <input type="text" id="stockName" placeholder="اكتب اسم السهم...">
+      <ul id="suggestions" class="autocomplete"></ul>
+    </div>
+    <div class="form-group">
+      <label for="buyPrice">سعر الشراء</label>
+      <input type="number" id="buyPrice" placeholder="ريال سعودي">
+    </div>
+    <div class="form-group">
+      <label for="sellPrice">سعر البيع</label>
+      <input type="number" id="sellPrice" placeholder="ريال سعودي">
+    </div>
+    <button onclick="goToResultPage()">احسب</button>
+    <button onclick="goHome()">رجوع للرئيسية</button>
+  </div>
+
+  <div id="resultPage" class="container hidden slideDown">
+    <h2>نتيجة حساب التطهير</h2>
+    <div class="purification-rate-box">
+      <p>نسبة تطهير السهم: <span id="purificationRate"></span>%</p>
+    </div>
+    <div class="result" id="result"></div>
+    <div id="profitDetails">
+      <p><strong>مبلغ الربح:</strong> <span id="profitAmount"></span> ريال سعودي</p>
+      <p><strong>نسبة الربح:</strong> <span id="profitPercentage"></span>%</p>
+      <p><strong>مبلغ التطهير:</strong> <span id="purificationAmount"></span> ريال سعودي</p>
+    </div>
+    <button onclick="goHome()">رجوع للرئيسية</button>
+  </div>
+
+  <div id="purificationRatesPage" class="container hidden slideDown">
+    <h2>نسب تطهير الشركات</h2>
+    <div class="search-box">
+      <input type="text" id="searchStock" placeholder="ابحث عن شركة...">
+    </div>
+    <div class="purification-rates" id="purificationRatesDiv">
+    </div>
+    <div id="noResultsMessage" class="no-results hidden">
+      الشركة غير موجودة عذراً
+    </div>
+    <button onclick="goHome()">رجوع للرئيسية</button>
+  </div>
+
+  <script>
+    let stocks = {};
+
+    fetch('stocks.json')
+      .then(response => response.json())
+      .then(data => {
+        stocks = data;
+      })
+      .catch(error => console.error('Error loading the JSON file:', error));
+
+    const stockInput = document.getElementById('stockName');
+    const suggestionsBox = document.getElementById('suggestions');
+
+    stockInput.addEventListener('input', function() {
+      const input = this.value.toLowerCase();
+      suggestionsBox.innerHTML = '';
+
+      if (!input) return;
+
+      const matches = Object.keys(stocks).filter(name => name.toLowerCase().includes(input));
+
+      matches.forEach(match => {
+        const li = document.createElement('li');
+        li.textContent = match;
+        li.style.cursor = 'pointer';
+        li.onclick = function() {
+          stockInput.value = this.textContent;
+          suggestionsBox.innerHTML = '';
+        };
+        suggestionsBox.appendChild(li);
+      });
+    });
+
+    const searchInput = document.getElementById('searchStock');
+    const purificationRatesDiv = document.getElementById('purificationRatesDiv');
+    const noResultsMessage = document.getElementById('noResultsMessage');
+
+    searchInput.addEventListener('input', function() {
+      const searchTerm = this.value.toLowerCase();
+      let filteredStocks = Object.entries(stocks).filter(([name]) => name.toLowerCase().includes(searchTerm));
+      
+      if (filteredStocks.length === 0) {
+        noResultsMessage.classList.remove('hidden');
+      } else {
+        noResultsMessage.classList.add('hidden');
+      }
+
+      let ratesContent = '<ul>';
+      filteredStocks.forEach(([name, data]) => {
+        ratesContent += `<li><span>${name}</span>: نسبة التطهير ${data.purification * 100}%</li>`;
+      });
+      ratesContent += '</ul>';
+      purificationRatesDiv.innerHTML = ratesContent;
+    });
+
+    function goToCalculator() {
+      hideAll();
+      document.getElementById('calculatorPage').classList.remove('hidden');
+    }
+
+    function goToPurificationRates() {
+      hideAll();
+      document.getElementById('purificationRatesPage').classList.remove('hidden');
+      loadPurificationRates();
+    }
+
+    function goToResultPage() {
+      const stockName = document.getElementById('stockName').value.trim();
+      const buyPrice = parseFloat(document.getElementById('buyPrice').value);
+      const sellPrice = parseFloat(document.getElementById('sellPrice').value);
+      const stock = stocks[stockName];
+
+      const resultDiv = document.getElementById('result');
+      const profitAmount = document.getElementById('profitAmount');
+      const profitPercentage = document.getElementById('profitPercentage');
+      const purificationAmount = document.getElementById('purificationAmount');
+      const purificationRate = document.getElementById('purificationRate');
+
+      if (stock && buyPrice > 0 && sellPrice > 0) {
+        const purification = stock.purification;
+        const profit = (sellPrice - buyPrice) * (1 - purification);
+        const profitPercent = ((profit / buyPrice) * 100).toFixed(2);
+        const purificationValue = (sellPrice - buyPrice) * purification;
+
+        resultDiv.textContent = '';
+        profitAmount.textContent = profit.toFixed(2);
+        profitPercentage.textContent = profitPercent;
+        purificationAmount.textContent = purificationValue.toFixed(2);
+        purificationRate.textContent = (purification * 100).toFixed(2);
+
+        document.getElementById('resultPage').classList.remove('hidden');
+        document.getElementById('calculatorPage').classList.add('hidden');
+      } else {
+        alert('الرجاء التأكد من جميع المدخلات.');
+      }
+    }
+
+    function loadPurificationRates() {
+      const purificationRatesDiv = document.getElementById('purificationRatesDiv');
+      let ratesContent = '<ul>';
+      for (const [name, data] of Object.entries(stocks)) {
+        ratesContent += `<li><span>${name}</span>: نسبة التطهير ${data.purification * 100}%</li>`;
+      }
+      ratesContent += '</ul>';
+      purificationRatesDiv.innerHTML = ratesContent;
+    }
+
+    function hideAll() {
+      document.getElementById('homePage').classList.add('hidden');
+      document.getElementById('calculatorPage').classList.add('hidden');
+      document.getElementById('resultPage').classList.add('hidden');
+      document.getElementById('purificationRatesPage').classList.add('hidden');
+    }
+
+    function goHome() {
+      hideAll();
+      document.getElementById('homePage').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
